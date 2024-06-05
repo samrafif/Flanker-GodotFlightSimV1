@@ -1,0 +1,163 @@
+[gd_scene load_steps=19 format=3 uid="uid://fr4r11j5a1dh"]
+
+[ext_resource type="Texture2D" uid="uid://cqdp8fxiyeemw" path="res://assets/autumn_field_puresky_4k.exr" id="1_gau4f"]
+[ext_resource type="PackedScene" uid="uid://dg7dl3mxb47yk" path="res://assets/su57.glb" id="2_f1fpn"]
+[ext_resource type="Script" path="res://scripts/Camera3D.gd" id="2_lw5tc"]
+[ext_resource type="Curve" uid="uid://hn3j0ba0dnsg" path="res://assets/lift_coef_fr.tres" id="5_4kqtq"]
+[ext_resource type="Texture2D" uid="uid://bdv1etrmy3chc" path="res://assets/su57_su57_Body_BaseColor.png" id="5_d1yln"]
+[ext_resource type="PackedScene" uid="uid://csvcg38cadj3m" path="res://assets/f15.fbx" id="5_swjie"]
+[ext_resource type="Script" path="res://scripts/RigidBody3D2.gd" id="6_8twav"]
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_clesw"]
+panorama = ExtResource("1_gau4f")
+
+[sub_resource type="Sky" id="Sky_53ien"]
+sky_material = SubResource("PanoramaSkyMaterial_clesw")
+
+[sub_resource type="Environment" id="Environment_6l8ye"]
+background_mode = 2
+sky = SubResource("Sky_53ien")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_y7auk"]
+size = Vector3(2.957, 1, 3.89404)
+
+[sub_resource type="BoxMesh" id="BoxMesh_5f1k1"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tbvdn"]
+albedo_texture = ExtResource("5_d1yln")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_hcp33"]
+size = Vector3(20000.8, 10, 41392.3)
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_tb37g"]
+friction = 0.0
+absorbent = true
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_mtbcs"]
+size = Vector3(1.9105, 1.19873, 8.93365)
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_qs5n1"]
+radius = 0.347398
+height = 1.64155
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_vlu5x"]
+radius = 0.366527
+height = 1.71597
+
+[node name="Main" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_6l8ye")
+
+[node name="CharacterBody3D" type="CharacterBody3D" parent="WorldEnvironment"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0215278, 0.351988, 2.42953)
+visible = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="WorldEnvironment/CharacterBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.046, 0.622, 0.260496)
+shape = SubResource("BoxShape3D_y7auk")
+disabled = true
+
+[node name="RigidBody3D" type="RigidBody3D" parent="WorldEnvironment"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1480.53)
+freeze = true
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="WorldEnvironment/RigidBody3D"]
+transform = Transform3D(20000.8, 0, 0, 0, 0.234, 0, 0, 0, 41392.3, 0, 0, -7985.39)
+mesh = SubResource("BoxMesh_5f1k1")
+skeleton = NodePath("")
+surface_material_override/0 = SubResource("StandardMaterial3D_tbvdn")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="WorldEnvironment/RigidBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -5, -7985.38)
+shape = SubResource("BoxShape3D_hcp33")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="WorldEnvironment"]
+transform = Transform3D(0.670038, -0.178152, 0.720632, 0, 0.970775, 0.239991, -0.742327, -0.160803, 0.650456, 6.84985, 4.19003, 3.85664)
+light_energy = 0.0
+shadow_enabled = true
+
+[node name="Camera3D" type="Camera3D" parent="WorldEnvironment" node_paths=PackedStringArray("target_path")]
+transform = Transform3D(0.999835, -0.00359242, -0.0178166, 0.00340341, 0.999938, -0.0106281, 0.0178537, 0.0105657, 0.999785, -0.0183515, 1.33799, 15.39)
+fov = 69.6447
+script = ExtResource("2_lw5tc")
+target_path = NodePath("../RigidBody3D2")
+offset = Vector3(0, 1, 3)
+
+[node name="RigidBody3D2" type="RigidBody3D" parent="WorldEnvironment"]
+transform = Transform3D(1, 0, 0, 0, 0.999994, -0.0034034, 0, 0.0034034, 0.999994, -0.00170612, 0.332426, 2.53598)
+mass = 30.0
+physics_material_override = SubResource("PhysicsMaterial_tb37g")
+center_of_mass_mode = 1
+script = ExtResource("6_8twav")
+liftCoefCurve = ExtResource("5_4kqtq")
+
+[node name="su57" parent="WorldEnvironment/RigidBody3D2" instance=ExtResource("2_f1fpn")]
+transform = Transform3D(-0.000692755, 0, 0.019988, -6.80272e-05, 0.0199999, -2.35773e-06, -0.0199879, -6.8068e-05, -0.000692753, 0.0310033, 0.713466, 0.383672)
+
+[node name="F15_Mesh" parent="WorldEnvironment/RigidBody3D2" instance=ExtResource("5_swjie")]
+transform = Transform3D(0.246147, 0, 0, 0, 0.246147, 0, 0, 0, 0.246147, 0.00445464, 0.572648, 0.340958)
+visible = false
+
+[node name="MainCollision" type="CollisionShape3D" parent="WorldEnvironment/RigidBody3D2"]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -0.00612068, 0.633114, -0.272626)
+shape = SubResource("BoxShape3D_mtbcs")
+
+[node name="LandingGear_Front" type="CollisionShape3D" parent="WorldEnvironment/RigidBody3D2"]
+transform = Transform3D(0.35, 0, 0, 0, 0.35, 0, 0, 0, 0.35, -0.00263596, 0.270868, -1.79711)
+shape = SubResource("CapsuleShape3D_qs5n1")
+
+[node name="LandingGear_PortWing" type="CollisionShape3D" parent="WorldEnvironment/RigidBody3D2"]
+transform = Transform3D(0.35, 0, 0, 0, 0.35, 0, 0, 0, 0.35, -0.23766, 0.285344, 0.131773)
+shape = SubResource("CapsuleShape3D_vlu5x")
+
+[node name="LandingGear_StarboardWing" type="CollisionShape3D" parent="WorldEnvironment/RigidBody3D2"]
+transform = Transform3D(0.35, 0, 0, 0, 0.35, 0, 0, 0, 0.35, 0.245174, 0.285344, 0.131773)
+shape = SubResource("CapsuleShape3D_vlu5x")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+
+[node name="ColorRect3" type="ColorRect" parent="."]
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 392.0
+offset_bottom = 128.0
+color = Color(0.168627, 0.168627, 0.168627, 0.639216)
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+offset_left = 16.0
+offset_top = 16.0
+offset_right = 584.0
+offset_bottom = 80.0
+text = "0"
+
+[node name="RichTextLabel2" type="RichTextLabel" parent="."]
+offset_left = 16.0
+offset_top = 64.0
+offset_right = 356.0
+offset_bottom = 104.0
+text = "0"
+
+[node name="Panel" type="Panel" parent="."]
+offset_left = 186.0
+offset_top = 574.0
+offset_right = 1012.0
+offset_bottom = 598.0
+
+[node name="Panel2" type="Panel" parent="."]
+offset_left = 1065.0
+offset_top = 54.0
+offset_right = 1092.0
+offset_bottom = 540.0
+
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_left = 192.0
+offset_top = 544.0
+offset_right = 209.0
+offset_bottom = 568.0
+
+[node name="ColorRect2" type="ColorRect" parent="."]
+offset_left = 1032.0
+offset_top = 64.0
+offset_right = 1056.0
+offset_bottom = 81.0

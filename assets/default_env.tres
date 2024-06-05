@@ -1,0 +1,9 @@
+[gd_resource type="Environment" load_steps=2 format=3 uid="uid://dnhsfkmbnibkf"]
+
+[sub_resource type="Sky" id="1"]
+
+[resource]
+background_mode = 3
+sky = SubResource("1")
+ambient_light_color = Color(0.630376, 0.314451, 0.187531, 1)
+fog_light_energy = 1.91

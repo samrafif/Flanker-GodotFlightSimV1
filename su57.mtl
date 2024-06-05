@@ -1,0 +1,58 @@
+# Blender MTL File: 'su57.blend'
+# Material Count: 5
+
+newmtl Glass
+Ns 359.999993
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+
+newmtl pkfa-airframe
+Ns 224.999983
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Bump Textures\\su57_Body_Normal.png
+map_Kd Textures\\su57_Body_BaseColor.png
+map_Ns Textures\\su57_Body_Roughness.png
+refl Textures\\su57_Body_Metallic.png
+
+newmtl pkfa-cockpit
+Ns 224.999983
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 1
+map_Bump Textures\\CockpitNormal.png
+map_Kd Textures\\Cockpit.png
+
+newmtl pkfa-hud
+Ns 899.999931
+Ka 1.000000 1.000000 1.000000
+Kd 0.080980 0.598397 0.099745
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 1
+
+newmtl pkfa-landinglights
+Ns 899.999931
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.000000 0.000000 0.000000
+Ke 1.000000 1.000000 1.000000
+Ni 1.000000
+d 1.000000
+illum 1
